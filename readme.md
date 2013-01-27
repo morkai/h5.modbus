@@ -7,6 +7,7 @@ Implementation of the Modbus TCP/ASCII/RTU master for node.js.
   - Tests
   - Readme
   - Documentation
+  - npm publish
 
 ## License
 
