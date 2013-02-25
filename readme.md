@@ -2,6 +2,8 @@
 
 Implementation of the Modbus TCP/ASCII/RTU master for node.js.
 
+[![Build Status](https://travis-ci.org/morkai/h5.modbus.png?branch=master)](https://travis-ci.org/morkai/h5.modbus)
+
 ## TODO
 
   - Tests
