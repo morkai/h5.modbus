@@ -1,5 +1,9 @@
+/*global describe:false,it:false*/
+
+'use strict';
+
 var should = require('should');
-var errors = require('../lib/errors');
+var errors = require((process.env.LIB_FOR_TESTS_DIR || '../lib') + '/errors');
 
 describe("errors", function()
 {
