@@ -4,9 +4,8 @@
 
 require('should');
 
-var SerialConnection = require(
-  (process.env.LIB_FOR_TESTS_DIR || '../lib') + '/connections/SerialConnection'
-);
+var LIB_DIR = process.env.LIB_FOR_TESTS_DIR || '../../lib';
+var SerialConnection = require(LIB_DIR + '/connections/SerialConnection');
 
 describe("SerialConnection", function()
 {

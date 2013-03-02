@@ -4,9 +4,9 @@
 
 require('should');
 
+var LIB_DIR = process.env.LIB_FOR_TESTS_DIR || '../../lib';
 var WriteSingleRegisterResponse = require(
-  (process.env.LIB_FOR_TESTS_DIR || '../lib')
-    + '/functions/WriteSingleRegisterResponse'
+  LIB_DIR + '/functions/WriteSingleRegisterResponse'
 );
 
 describe("WriteSingleRegisterResponse", function()

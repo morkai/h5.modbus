@@ -4,9 +4,9 @@
 
 require('should');
 
+var LIB_DIR = process.env.LIB_FOR_TESTS_DIR || '../../lib';
 var WriteMultipleCoilsRequest = require(
-  (process.env.LIB_FOR_TESTS_DIR || '../lib')
-    + '/functions/WriteMultipleCoilsRequest'
+  LIB_DIR + '/functions/WriteMultipleCoilsRequest'
 );
 
 describe("WriteMultipleCoilsRequest", function()

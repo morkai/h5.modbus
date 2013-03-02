@@ -4,9 +4,9 @@
 
 require('should');
 
+var LIB_DIR = process.env.LIB_FOR_TESTS_DIR || '../../lib';
 var ReadInputRegistersResponse = require(
-  (process.env.LIB_FOR_TESTS_DIR || '../lib')
-    + '/functions/ReadInputRegistersResponse'
+  LIB_DIR + '/functions/ReadInputRegistersResponse'
 );
 
 describe("ReadInputRegistersResponse", function()

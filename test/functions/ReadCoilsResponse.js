@@ -4,9 +4,8 @@
 
 require('should');
 
-var ReadCoilsResponse = require(
-  (process.env.LIB_FOR_TESTS_DIR || '../lib') + '/functions/ReadCoilsResponse'
-);
+var LIB_DIR = process.env.LIB_FOR_TESTS_DIR || '../../lib';
+var ReadCoilsResponse = require(LIB_DIR + '/functions/ReadCoilsResponse');
 
 describe("ReadCoilsResponse", function()
 {

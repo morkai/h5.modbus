@@ -4,9 +4,9 @@
 
 require('should');
 
+var LIB_DIR = process.env.LIB_FOR_TESTS_DIR || '../../lib';
 var ReadDiscreteInputsRequest = require(
-  (process.env.LIB_FOR_TESTS_DIR || '../lib')
-    + '/functions/ReadDiscreteInputsRequest'
+  LIB_DIR + '/functions/ReadDiscreteInputsRequest'
 );
 
 describe("ReadDiscreteInputsRequest", function()

@@ -4,9 +4,9 @@
 
 require('should');
 
+var LIB_DIR = process.env.LIB_FOR_TESTS_DIR || '../../lib';
 var WriteMultipleRegistersRequest = require(
-  (process.env.LIB_FOR_TESTS_DIR || '../lib')
-    + '/functions/WriteMultipleRegistersRequest'
+  LIB_DIR + '/functions/WriteMultipleRegistersRequest'
 );
 
 describe("WriteMultipleRegistersRequest", function()

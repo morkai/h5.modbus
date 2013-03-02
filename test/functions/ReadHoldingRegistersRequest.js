@@ -4,9 +4,9 @@
 
 require('should');
 
+var LIB_DIR = process.env.LIB_FOR_TESTS_DIR || '../../lib';
 var ReadHoldingRegistersRequest = require(
-  (process.env.LIB_FOR_TESTS_DIR || '../lib')
-    + '/functions/ReadHoldingRegistersRequest'
+  LIB_DIR + '/functions/ReadHoldingRegistersRequest'
 );
 
 describe("ReadHoldingRegistersRequest", function()

@@ -4,9 +4,9 @@
 
 require('should');
 
+var LIB_DIR = process.env.LIB_FOR_TESTS_DIR || '../../lib';
 var WriteSingleCoilResponse = require(
-  (process.env.LIB_FOR_TESTS_DIR || '../lib')
-    + '/functions/WriteSingleCoilResponse'
+  LIB_DIR + '/functions/WriteSingleCoilResponse'
 );
 
 describe("WriteSingleCoilResponse", function()
