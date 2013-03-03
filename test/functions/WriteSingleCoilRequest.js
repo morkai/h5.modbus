@@ -5,6 +5,7 @@
 require('should');
 
 var LIB_DIR = process.env.LIB_FOR_TESTS_DIR || '../../lib';
+
 var WriteSingleCoilRequest = require(
   LIB_DIR + '/functions/WriteSingleCoilRequest'
 );

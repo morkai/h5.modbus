@@ -6,6 +6,7 @@
 require('should');
 
 var LIB_DIR = process.env.LIB_FOR_TESTS_DIR || '../../lib';
+
 var EventEmitter = require('events').EventEmitter;
 var SerialConnection = require(LIB_DIR + '/connections/SerialConnection');
 
