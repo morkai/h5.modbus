@@ -8,6 +8,7 @@ require('should');
 var LIB_DIR = process.env.LIB_FOR_TESTS_DIR || '../../lib';
 
 var EventEmitter = require('events').EventEmitter;
+var sinon = require('sinon');
 var SerialConnection = require(LIB_DIR + '/connections/SerialConnection');
 
 describe("SerialConnection", function()
@@ -89,6 +90,77 @@ describe("SerialConnection", function()
       conn.write(new Buffer(10));
 
       actualError.should.be.equal(expectedError);
+    });
+  });
+
+  describe("destroy", function()
+  {
+    it("should remove all listeners", function()
+    {
+      var serialPort = new EventEmitter();
+      var spy = sinon.spy();
+
+      serialPort.close = function() {};
+
+      var conn = new SerialConnection(serialPort);
+
+      conn.on('test', spy);
+
+      conn.destroy();
+
+      conn.emit('test', 'test');
+
+      sinon.assert.notCalled(spy);
+    });
+
+    it("should remove all listeners from the SerialPort", function()
+    {
+      var serialPort = new EventEmitter();
+      var spy = sinon.spy();
+
+      serialPort.close = function() {};
+      serialPort.on('test', spy);
+
+      var conn = new SerialConnection(serialPort);
+
+      conn.destroy();
+
+      serialPort.emit('test', 'test');
+
+      sinon.assert.notCalled(spy);
+    });
+
+    it("should close the SerialPort", function()
+    {
+      var serialPort = new EventEmitter();
+      var spy = sinon.spy();
+
+      serialPort.close = spy;
+
+      var conn = new SerialConnection(serialPort);
+
+      conn.destroy();
+
+      sinon.assert.calledOnce(spy);
+    });
+
+    it("should not throw if called multiple times", function()
+    {
+      var serialPort = new EventEmitter();
+
+      serialPort.close = function() {};
+
+      var conn = new SerialConnection(serialPort);
+
+      function test()
+      {
+        conn.destroy();
+        conn.destroy();
+        conn.destroy();
+        conn.destroy();
+      }
+
+      test.should.not.throw();
     });
   });
 });

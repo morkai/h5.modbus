@@ -8,6 +8,7 @@ require('should');
 var LIB_DIR = process.env.LIB_FOR_TESTS_DIR || '../../lib';
 
 var EventEmitter = require('events').EventEmitter;
+var sinon = require('sinon');
 var UdpConnection = require(LIB_DIR + '/connections/UdpConnection');
 
 describe("UdpConnection", function()
@@ -231,6 +232,77 @@ describe("UdpConnection", function()
       conn.write(new Buffer(7));
 
       actualError.should.be.equal(expectedError);
+    });
+  });
+
+  describe("destroy", function()
+  {
+    it("should remove all listeners", function()
+    {
+      var socket = new EventEmitter();
+      var spy = sinon.spy();
+
+      socket.close = function() {};
+
+      var conn = new UdpConnection({socket: socket});
+
+      conn.on('test', spy);
+
+      conn.destroy();
+
+      conn.emit('test', 'test');
+
+      sinon.assert.notCalled(spy);
+    });
+
+    it("should remove all listeners from the SerialPort", function()
+    {
+      var socket = new EventEmitter();
+      var spy = sinon.spy();
+
+      socket.close = function() {};
+      socket.on('test', spy);
+
+      var conn = new UdpConnection({socket: socket});
+
+      conn.destroy();
+
+      socket.emit('test', 'test');
+
+      sinon.assert.notCalled(spy);
+    });
+
+    it("should close the SerialPort", function()
+    {
+      var socket = new EventEmitter();
+      var spy = sinon.spy();
+
+      socket.close = spy;
+
+      var conn = new UdpConnection({socket: socket});
+
+      conn.destroy();
+
+      sinon.assert.calledOnce(spy);
+    });
+
+    it("should not throw if called multiple times", function()
+    {
+      var socket = new EventEmitter();
+
+      socket.close = function() {};
+
+      var conn = new UdpConnection({socket: socket});
+
+      function test()
+      {
+        conn.destroy();
+        conn.destroy();
+        conn.destroy();
+        conn.destroy();
+      }
+
+      test.should.not.throw();
     });
   });
 });
