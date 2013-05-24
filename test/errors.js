@@ -1,3 +1,4 @@
+/*jshint maxlen:999*/
 /*global describe:false,it:false*/
 
 'use strict';
@@ -19,6 +20,11 @@ describe("errors", function()
       should.exist(errors.ResponseTimeoutError.super_);
       errors.ResponseTimeoutError.super_.should.be.equal(Error);
     });
+
+    it("should have proper name", function()
+    {
+      new errors.ResponseTimeoutError().name.should.be.equal('ResponseTimeoutError');
+    });
   });
 
   describe("InvalidChecksumError", function()
@@ -32,6 +38,11 @@ describe("errors", function()
     {
       should.exist(errors.InvalidChecksumError.super_);
       errors.InvalidChecksumError.super_.should.be.equal(Error);
+    });
+
+    it("should have proper name", function()
+    {
+      new errors.InvalidChecksumError().name.should.be.equal('InvalidChecksumError');
     });
   });
 
@@ -47,6 +58,11 @@ describe("errors", function()
       should.exist(errors.InvalidResponseDataError.super_);
       errors.InvalidResponseDataError.super_.should.be.equal(Error);
     });
+
+    it("should have proper name", function()
+    {
+      new errors.InvalidResponseDataError().name.should.be.equal('InvalidResponseDataError');
+    });
   });
 
   describe("IncompleteResponseFrameError", function()
@@ -60,6 +76,11 @@ describe("errors", function()
     {
       should.exist(errors.IncompleteResponseFrameError.super_);
       errors.IncompleteResponseFrameError.super_.should.be.equal(Error);
+    });
+
+    it("should have proper name", function()
+    {
+      new errors.IncompleteResponseFrameError().name.should.be.equal('IncompleteResponseFrameError');
     });
   });
 
