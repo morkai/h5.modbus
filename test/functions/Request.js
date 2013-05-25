@@ -61,7 +61,7 @@ describe("Request", function()
 
     it("should return a result of the call to the registered fromOptions()", function()
     {
-      functions[0x99] = {fromOptions: function(options) { return 1337; }};
+      functions[0x99] = {fromOptions: function() { return 1337; }};
 
       var result = Request.fromOptions({code: 0x99});
 

@@ -79,13 +79,13 @@ describe("ReadCoilsRequest", function()
   {
     it("should create an instance from the specified options object", function()
     {
-      var res = ReadCoilsRequest.fromOptions({
+      var req = ReadCoilsRequest.fromOptions({
         address: 0x0001,
         quantity: 2
       });
 
-      res.getAddress().should.be.equal(0x0001);
-      res.getQuantity().should.be.equal(2);
+      req.getAddress().should.be.equal(0x0001);
+      req.getQuantity().should.be.equal(2);
     });
   });
 
