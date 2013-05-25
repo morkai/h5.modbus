@@ -8,7 +8,6 @@ require('should');
 var LIB_DIR = process.env.LIB_FOR_TESTS_DIR || '../../lib';
 
 var WriteSingleCoilResponse = require(LIB_DIR + '/functions/WriteSingleCoilResponse');
-var ExceptionResponse = require(LIB_DIR + '/functions/ExceptionResponse');
 
 describe("WriteSingleCoilResponse", function()
 {
