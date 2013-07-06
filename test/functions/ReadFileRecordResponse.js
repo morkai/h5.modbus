@@ -182,7 +182,7 @@ describe("ReadFileRecordResponse", function()
     });
   });
 
-  describe("getSubResponsesLength", function()
+  describe("getTotalRecordDataLength", function()
   {
     it("should return a total length of the specified sub-responses", function()
     {
@@ -191,7 +191,7 @@ describe("ReadFileRecordResponse", function()
         new Buffer([0x33, 0xCD, 0x00, 0x40])
       ];
 
-      new ReadFileRecordResponse(subResponses).getSubResponsesLength().should.be.equal(8);
+      new ReadFileRecordResponse(subResponses).getTotalRecordDataLength().should.be.equal(8);
     });
   });
 });
