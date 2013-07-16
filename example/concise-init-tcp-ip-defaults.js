@@ -6,7 +6,7 @@
 
 var modbus = require('../lib');
 
-var master = modbus.createMaster({});
+var master = modbus.createMaster();
 
 master.once('connected', function()
 {
