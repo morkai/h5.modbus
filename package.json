@@ -18,8 +18,7 @@
   "engine": ["node ~0.10.5"],
   "main": "./lib/index",
   "dependencies": {
-    "h5.buffers": "~0.1.1",
-    "serialport": "git://github.com/voodootikigod/node-serialport.git"
+    "h5.buffers": "~0.1.1"
   },
   "devDependencies": {
     "should": "~1.2.2",
