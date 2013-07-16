@@ -47,6 +47,42 @@ describe("UdpConnection", function()
     actualHits.should.be.eql(expectedHits);
   });
 
+  it("should emit listening events emitted by the specified dgram.Socket as open events", function()
+  {
+    var socket = new EventEmitter();
+    var expectedHits = 1;
+    var actualHits = 0;
+
+    var conn = new UdpConnection({socket: socket});
+
+    conn.on('open', function()
+    {
+      actualHits++;
+    });
+
+    socket.emit('listening');
+
+    actualHits.should.be.eql(expectedHits);
+  });
+
+  it("should emit close events emitted by the specified dgram.Socket", function()
+  {
+    var socket = new EventEmitter();
+    var expectedHits = 1;
+    var actualHits = 0;
+
+    var conn = new UdpConnection({socket: socket});
+
+    conn.on('close', function()
+    {
+      actualHits++;
+    });
+
+    socket.emit('close');
+
+    actualHits.should.be.eql(expectedHits);
+  });
+
   it("should use the specified instance of UdpConnection.Options", function()
   {
     var options = new UdpConnection.Options({
@@ -303,6 +339,29 @@ describe("UdpConnection", function()
       }
 
       test.should.not.throw();
+    });
+  });
+
+  describe("isOpen", function()
+  {
+    it("should return true if the address() method of the specified dgram.Socket doesn't throw", function()
+    {
+      var socket = new EventEmitter();
+      socket.address = function() {};
+
+      var conn = new UdpConnection({socket: socket});
+
+      conn.isOpen().should.be.equal(true);
+    });
+
+    it("should return false if the address() method of the specified dgram.Socket throws", function()
+    {
+      var socket = new EventEmitter();
+      socket.address = function() { throw new Error("Not bound!"); };
+
+      var conn = new UdpConnection({socket: socket});
+
+      conn.isOpen().should.be.equal(false);
     });
   });
 });

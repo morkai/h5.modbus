@@ -49,6 +49,42 @@ describe("SerialConnection", function()
     actualHits.should.be.eql(expectedHits);
   });
 
+  it("should emit open events emitted by the specified SerialPort", function()
+  {
+    var serialPort = new EventEmitter();
+    var expectedHits = 1;
+    var actualHits = 0;
+
+    var conn = new SerialConnection(serialPort);
+
+    conn.on('open', function()
+    {
+      actualHits++;
+    });
+
+    serialPort.emit('open');
+
+    actualHits.should.be.eql(expectedHits);
+  });
+
+  it("should emit close events emitted by the specified SerialPort", function()
+  {
+    var serialPort = new EventEmitter();
+    var expectedHits = 1;
+    var actualHits = 0;
+
+    var conn = new SerialConnection(serialPort);
+
+    conn.on('close', function()
+    {
+      actualHits++;
+    });
+
+    serialPort.emit('close');
+
+    actualHits.should.be.eql(expectedHits);
+  });
+
   describe("write", function()
   {
     it("should delegate to a write method of the specified SerialPort", function()
@@ -161,6 +197,31 @@ describe("SerialConnection", function()
       }
 
       test.should.not.throw();
+    });
+  });
+
+  describe("isOpen", function()
+  {
+    it("should return true if the SerialPort.fd property is truthy", function()
+    {
+      [true, 1, 'yes'].forEach(function(truthy)
+      {
+        var serialPort = new EventEmitter();
+        serialPort.fd = truthy;
+
+        new SerialConnection(serialPort).isOpen().should.be.equal(true);
+      });
+    });
+
+    it("should return false if the SerialPort.fd property is falsy", function()
+    {
+      [false, 0, null].forEach(function(falsy)
+      {
+        var serialPort = new EventEmitter();
+        serialPort.fd = falsy;
+
+        new SerialConnection(serialPort).isOpen().should.be.equal(false);
+      });
     });
   });
 });
