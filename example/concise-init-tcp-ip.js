@@ -31,7 +31,7 @@ var master = modbus.createMaster({
   defaultTimeout: 100
 });
 
-socket.once('connect', function()
+master.once('connected', function()
 {
   var t1 = master.readDiscreteInputs(0x0000, 8, {
     unit: 0,
@@ -51,5 +51,12 @@ socket.once('connect', function()
     }
   });
 
-  setTimeout(function() { t1.cancel(); }, 5000);
+  setTimeout(
+    function()
+    {
+      t1.cancel();
+      master.destroy();
+    },
+    5000
+  );
 });

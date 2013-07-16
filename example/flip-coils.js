@@ -25,17 +25,13 @@ var COIL_QUANTITY = 8;
 // A number of milliseconds between flips.
 var SET_DELAY = 150;
 
-var net = require('net');
 var modbus = require('../lib');
-
-var socket = new net.Socket();
 
 var master = modbus.createMaster({
   transport: {
     type: 'ip',
     connection: {
       type: 'tcp',
-      socket: socket,
       host: SLAVE_HOST,
       port: SLAVE_PORT
     }
@@ -96,7 +92,7 @@ function readCoils(onIndex)
   });
 }
 
-socket.once('connect', function()
+master.once('connected', function()
 {
   setCoils(-1);
 });

@@ -4,20 +4,11 @@
 // from a MODBUS TCP/IP slave (with all configuration options implicitly set
 // to default values).
 
-var net = require('net');
 var modbus = require('../lib');
 
-var socket = new net.Socket();
+var master = modbus.createMaster({});
 
-var master = modbus.createMaster({
-  transport: {
-    connection: {
-      socket: socket
-    }
-  }
-});
-
-socket.once('connect', function()
+master.once('connected', function()
 {
   var t1 = master.readDiscreteInputs(0x0000, 8, {
     interval: 100,
@@ -34,5 +25,12 @@ socket.once('connect', function()
     }
   });
 
-  setTimeout(function() { t1.cancel(); }, 5000);
+  setTimeout(
+    function()
+    {
+      t1.cancel();
+      master.destroy();
+    },
+    5000
+  );
 });

@@ -214,7 +214,7 @@ transaction1.on('cancel', function()
 });
 
 // Send requests only if we're connected to the slave.
-connection.once('open', function()
+master.once('connected', function()
 {
   // Execute a transaction by providing an instance of `Transaction` or
   // an options object to the `execute()` method or by calling one
@@ -225,7 +225,7 @@ connection.once('open', function()
     function()
     {
       transaction1.cancel();
-      connection.close();
+      master.destroy();
     },
     5000
   );
