@@ -15,12 +15,14 @@ var socket = new net.Socket();
 // Connection is responsible for sending and receiving MODBUS frames.
 // Every Connection is an EventEmitter.
 // Available connection types are:
-//   - tcp - using node's `net` module - events: open, close, error, data,
-//   - udp - using node's `dgram` module - events: error, data,
-//   - serial - using `serialport` module - events: error, data.
+//   - tcp - using node's `net` module,
+//   - udp - using node's `dgram` module,
+//   - serial - using the `serialport` module.
+// All Connections emit the following events: open, close, error, write
+// and data.
 var connection = new TcpConnection({
-  // An instance of net.Socket. Should specify only if one wants to attach
-  // events to the object.
+  // An instance of net.Socket. Should be specified only if one wants to attach
+  // any events to the object.
   socket: socket,
   // IP address or hostname of the MODBUS TCP/IP slave.
   // Defaults to `127.0.0.1`.
@@ -61,6 +63,11 @@ connection.on('close', function()
 connection.on('error', function(err)
 {
   console.log('[connection#error] %s', err.message);
+});
+
+connection.on('write', function(data)
+{
+  console.log('[connection#write]', data);
 });
 
 connection.on('data', function(data)
@@ -161,7 +168,7 @@ transaction1.setInterval(100);
 // This event is not emitted if the transaction was cancelled.
 transaction1.on('timeout', function()
 {
-  console.error('[transaction1#timeout]');
+  console.error('[transaction#timeout]');
 });
 
 // Emitted after the `timeout` event or when an error occurred related to that
@@ -199,7 +206,7 @@ transaction1.on('complete', function(err, response)
 {
   if (err)
   {
-    console.error('[transaction1#complete] %s', err.message);
+    console.error('[transaction#complete] %s', err.message);
   }
   else
   {
@@ -210,7 +217,7 @@ transaction1.on('complete', function(err, response)
 // Emitted after the transaction was cancelled by calling the `cancel()` method.
 transaction1.on('cancel', function()
 {
-  console.log('[transaction1#cancel]');
+  console.log('[transaction#cancel]');
 });
 
 // Send requests only if we're connected to the slave.

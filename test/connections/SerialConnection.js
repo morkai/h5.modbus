@@ -127,6 +127,53 @@ describe("SerialConnection", function()
 
       actualError.should.be.equal(expectedError);
     });
+
+    it("should emit a write event with the specified data as the first argument", function()
+    {
+      var serialPort = new EventEmitter();
+      var expectedHits = [[new Buffer(10)]];
+      var actualHits = [];
+
+      serialPort.write = function() {};
+
+      var conn = new SerialConnection(serialPort);
+
+      conn.on('write', function()
+      {
+        actualHits.push(arguments);
+      });
+
+      conn.write.apply(conn, expectedHits[0]);
+
+      actualHits.should.be.eql(expectedHits);
+    });
+
+    it("should emit a write event even if the SerialPort.write() threw", function()
+    {
+      var serialPort = new EventEmitter();
+      var expectedHits = [[new Buffer(10)]];
+      var actualHits = [];
+      var expectedError = new Error("FAKE SerialPort.write()");
+      var actualError = null;
+
+      serialPort.write = function() { throw expectedError; };
+
+      var conn = new SerialConnection(serialPort);
+
+      conn.on('error', function(err)
+      {
+        actualError = err;
+      });
+      conn.on('write', function()
+      {
+        actualHits.push(arguments);
+      });
+
+      conn.write.apply(conn, expectedHits[0]);
+
+      actualHits.should.be.eql(expectedHits);
+      actualError.should.be.equal(expectedError);
+    });
   });
 
   describe("destroy", function()

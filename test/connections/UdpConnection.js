@@ -269,6 +269,53 @@ describe("UdpConnection", function()
 
       actualError.should.be.equal(expectedError);
     });
+
+    it("should emit a write event with the specified data as the first argument", function()
+    {
+      var socket = new EventEmitter();
+      var expectedHits = [[new Buffer(10)]];
+      var actualHits = [];
+
+      socket.send = function() {};
+
+      var conn = new UdpConnection({socket: socket});
+
+      conn.on('write', function()
+      {
+        actualHits.push(arguments);
+      });
+
+      conn.write.apply(conn, expectedHits[0]);
+
+      actualHits.should.be.eql(expectedHits);
+    });
+
+    it("should emit a write event even if the Socket.send() threw", function()
+    {
+      var socket = new EventEmitter();
+      var expectedHits = [[new Buffer(10)]];
+      var actualHits = [];
+      var expectedError = new Error("FAKE Socket.send()");
+      var actualError = null;
+
+      socket.send = function() { throw expectedError; };
+
+      var conn = new UdpConnection({socket: socket});
+
+      conn.on('error', function(err)
+      {
+        actualError = err;
+      });
+      conn.on('write', function()
+      {
+        actualHits.push(arguments);
+      });
+
+      conn.write.apply(conn, expectedHits[0]);
+
+      actualHits.should.be.eql(expectedHits);
+      actualError.should.be.equal(expectedError);
+    });
   });
 
   describe("destroy", function()
