@@ -36,6 +36,21 @@ var master = modbus.createMaster({
   defaultTimeout: 100
 });
 
+master.on('connected', function()
+{
+  console.log('[master#connected]');
+});
+
+master.on('disconnected', function()
+{
+  console.log('[master#disconnected]');
+});
+
+master.on('error', function(err)
+{
+  console.error('[master#error] %s', err.message);
+});
+
 var connection = master.getConnection();
 
 connection.on('open', function()

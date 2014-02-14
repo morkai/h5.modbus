@@ -127,6 +127,25 @@ var master = new Master({
   defaultTimeout: 100
 });
 
+// Emitted when the underlying Connection emits the `open` event.
+master.on('connected', function()
+{
+  console.log('[master#connected]');
+});
+
+// Emitted when the underlying Connection emits the `close` event,
+// but only if the `connected` event was emitted before.
+master.on('disconnected', function()
+{
+  console.log('[master#disconnected]');
+});
+
+// Emitted when the underlying Connection emits the `error` event.
+master.on('error', function(err)
+{
+  console.error('[master#error] %s', err.message);
+});
+
 var address = 0x0000;
 var quantity = 8;
 
