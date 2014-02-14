@@ -88,6 +88,11 @@ connection.on('data', function(data)
 //     periods and CRC checksum.
 var transport = new IpTransport(connection);
 
+transport.on('request', function(transaction)
+{
+  console.log('[transport#request] %s', transaction.getRequest());
+});
+
 // Master is responsible for managing and executing transactions.
 // Transactions, when executed, are placed in a queue and sent only if a number
 // of currently sent requests is less than the `maxConcurrentRequests` option.

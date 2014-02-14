@@ -63,6 +63,13 @@ connection.on('data', function(data)
   console.log('[connection#data]', data);
 });
 
+var transport = master.getTransport();
+
+transport.on('request', function(transaction)
+{
+  console.log('[transport#request] %s', transaction.getRequest());
+});
+
 master.once('connected', function()
 {
   var t1 = master.readDiscreteInputs(0x0000, 8, {
