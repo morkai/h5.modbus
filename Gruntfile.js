@@ -1,11 +1,11 @@
 /*global module:false*/
 
+'use strict';
+
 var path = require('path');
 
 module.exports = function(grunt)
 {
-  'use strict';
-
   var buildDir = './build/';
   var lcovInstrumentDir = './build/instrument/';
   var lcovReportDir = './build/coverage/';
