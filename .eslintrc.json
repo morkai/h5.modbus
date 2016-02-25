@@ -145,7 +145,7 @@
 		"eol-last": 2,
 		"func-names": 0,
 		"func-style": [0, "declaration"],
-		"indent": [2, "tab", {"SwitchCase": 1}],
+		"indent": [2, 2, {"SwitchCase": 1}],
 		"key-spacing": [2, {
 			"beforeColon": false,
 			"afterColon": true
