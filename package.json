@@ -1,0 +1,34 @@
+{
+	"name": "h5.modbus",
+	"version": "1.0.0",
+	"description": "Implementation of the MODBUS IP/ASCII/RTU TCP/UDP/Serial master and slave for Node.js.",
+	"keywords": ["h5", "modbus", "master", "slave", "ip", "ascii", "rtu", "tcp", "udp", "serialport"],
+	"license": "MIT",
+	"homepage": "https://github.com/morkai/h5.modbus",
+	"author": {
+		"name": "Łukasz Walukiewicz",
+		"email": "lukasz@miracle.systems",
+		"url": "http://miracle.systems/p/h5.modbus"
+	},
+	"bugs": "https://github.com/morkai/h5.modbus/issues",
+	"repository": {
+		"type": "git",
+		"url":  "http://github.com/morkai/h5.modbus.git"
+	},
+	"engines": {
+    "node": ">=4.x.x"
+  },
+	"main": "./lib/index",
+	"dependencies": {
+		"h5.buffers": "0.x.x"
+	},
+	"peerDependencies": {
+		"serialport": "2.x.x"
+	},
+	"devDependencies": {
+
+	},
+	"scripts": {
+
+	}
+}
