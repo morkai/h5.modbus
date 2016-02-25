@@ -10,7 +10,7 @@ Implementation of the MODBUS IP/ASCII/RTU master and slave over TCP/UDP/Serial f
 
 ## TODO
 
-	- Remaining messages
+  - Remaining messages
   - Tests
   - Documentation
   - Readme
