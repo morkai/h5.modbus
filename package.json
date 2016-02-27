@@ -23,7 +23,7 @@
 		"h5.buffers": "0.x.x"
 	},
 	"peerDependencies": {
-		"serialport": "2.x.x"
+
 	},
 	"devDependencies": {
 
