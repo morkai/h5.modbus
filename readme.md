@@ -2,19 +2,58 @@
 
 Implementation of the MODBUS IP/ASCII/RTU master and slave over TCP/UDP/Serial for Node.js.
 
+## TODO
+
+  - Remaining messages
+  - **Tests**
+  - Documentation
+  - npm publish
+
 ## Requirements
 
   * [Node.js](https://nodejs.org/) >= v4
   * [voodootikigod/node-serialport](https://github.com/voodootikigod/node-serialport) >= v2
     (only for serial port communication).
 
-## TODO
+## Installation
 
-  - Remaining messages
-  - Tests
-  - Documentation
-  - Readme
-  - npm publish
+```
+npm install github:morkai/h5.modbus#master
+```
+
+## Usage
+
+```js
+'use strict';
+
+const modbus = require('h5.modbus');
+
+const slave = modbus.createSlave({requestHandler: handleRequest});
+const master = modbus.createMaster();
+
+master.once('open', () => master.readHoldingRegisters(0x0000, 10, handleResponse));
+
+function handleRequest(unit, request, respond)
+{
+  respond(modbus.ExceptionCode.IllegalFunctionCode);
+}
+
+function handleResponse(err, res)
+{
+  if (err)
+  {
+    console.error(`[master#error] ${err.message}`);
+  }
+  else if (res.isException())
+  {
+    console.log(`[master#exception] ${res}`);
+  }
+  else
+  {
+    console.log(`[master#response] ${res}`);
+  }
+}
+```
 
 ## License
 
