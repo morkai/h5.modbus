@@ -1,6 +1,6 @@
 ﻿# h5.modbus
 
-Implementation of the MODBUS IP/ASCII/RTU master and slave over TCP/UDP/Serial for Node.js.
+Implementation of the MODBUS IP/ASCII/RTU master and slave over TCP/UDP/Serial/WebSocket for Node.js.
 
 ## TODO
 
@@ -14,6 +14,8 @@ Implementation of the MODBUS IP/ASCII/RTU master and slave over TCP/UDP/Serial f
   * [Node.js](https://nodejs.org/) >= v4
   * [voodootikigod/node-serialport](https://github.com/voodootikigod/node-serialport) >= v2
     (only for serial port communication).
+  * [websockets/ws](https://github.com/websockets/ws) >= v1
+    (only for WebSocket communication).
 
 ## Installation
 
