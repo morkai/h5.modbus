@@ -17,6 +17,7 @@ const stats = require('./stats');
 const transport = new modbus.IpTransport({});
 // const transport = new modbus.AsciiTransport({});
 // const connection = new modbus.UdpConnection({});
+// const connection = new modbus.WebSocketConnection({});
 const connection = new modbus.TcpConnection({});
 const master = new modbus.Master({
   transport: transport,

@@ -1,8 +1,8 @@
 {
 	"name": "h5.modbus",
 	"version": "1.0.0",
-	"description": "Implementation of the MODBUS IP/ASCII/RTU TCP/UDP/Serial master and slave for Node.js.",
-	"keywords": ["h5", "modbus", "master", "slave", "ip", "ascii", "rtu", "tcp", "udp", "serialport"],
+	"description": "Implementation of the MODBUS IP/ASCII/RTU TCP/UDP/Serial/WebSocket master and slave for Node.js.",
+	"keywords": ["h5", "modbus", "master", "slave", "ip", "ascii", "rtu", "tcp", "udp", "serialport", "websocket"],
 	"license": "MIT",
 	"homepage": "https://github.com/morkai/h5.modbus",
 	"author": {

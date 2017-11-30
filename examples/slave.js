@@ -20,6 +20,7 @@ const transport = new modbus.IpTransport({});
 // const transport = new modbus.AsciiTransport({});
 // const connection = new modbus.UdpConnection({});
 // const listener = new modbus.UdpListener();
+// const listener = new modbus.WebSocketListener({});
 const listener = new modbus.TcpListener();
 
 listener.on('open', () => console.log('listener#open'));
