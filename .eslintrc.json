@@ -3,9 +3,9 @@
 		"node": true,
 		"es6": true
 	},
-	"ecmaFeatures": {
-
-	},
+  "parserOptions": {
+    "ecmaVersion": 8
+  },
 	"rules": {
 		// Possible errors
 		"comma-dangle": [2, "never"],
@@ -55,8 +55,8 @@
 		"accessor-pairs": 2,
 		"array-callback-return": 2,
 		"block-scoped-var": 2,
-		"complexity": [1, 20],
-		"consistent-return": 2,
+		"complexity": [0, 20],
+		"consistent-return": 0,
 		"curly": [2, "all"],
 		"default-case": 0,
 		"dot-notation": [2, {"allowKeywords": true, "allowPattern": ""}],
@@ -90,10 +90,10 @@
 		"no-octal-escape": 2,
 		"no-octal": 2,
 		"no-param-reassign": 0,
-		"no-process-env": 2,
+		"no-process-env": 0,
 		"no-proto": 2,
 		"no-redeclare": 2,
-		"no-return-assign": 2,
+		"no-return-assign": 0,
 		"no-script-url": 2,
 		"no-self-compare": 2,
 		"no-sequences": 2,
@@ -115,10 +115,10 @@
 		"no-delete-var": 2,
 		"no-label-var": 2,
 		"no-shadow-restricted-names": 2,
-		"no-shadow": 2,
+		"no-shadow": 0,
 		"no-undef-init": 2,
 		"no-undef": 2,
-		"no-undefined": 2,
+		"no-undefined": 0,
 		"no-unused-vars": [2, {
 			"vars": "all",
 			"args": "after-used"
@@ -164,15 +164,15 @@
 			"allowBlockEnd": true
 		}],
 		"linebreak-style": [2, "unix"],
-		"max-nested-callbacks": [2, 3],
+		"max-nested-callbacks": [0, 3],
 		"new-cap": [2, {
 			"newIsCap": true,
 			"capIsNew": true,
 			"newIsCapExceptions": [],
-			"capIsNewExceptions": []
+			"capIsNewExceptions": ["Deferred"]
 		}],
 		"new-parens": 2,
-		"newline-after-var": [2, "always"],
+		"newline-after-var": [0, "always"],
 		"no-array-constructor": 2,
 		"no-continue": 0,
 		"no-inline-comments": 0,
@@ -184,7 +184,7 @@
 		"no-spaced-func": 2,
 		"no-ternary": 0,
 		"no-trailing-spaces": [2, {"skipBlankLines": false}],
-		"no-underscore-dangle": 2,
+		"no-underscore-dangle": 0,
 		"no-unneeded-ternary": 2,
 		"object-curly-spacing": [2, "never", {
 			"objectsInObjects": false,
@@ -194,7 +194,7 @@
 		"operator-assignment": [2, "always"],
 		"operator-linebreak": [2, "before"],
 		"padded-blocks": [2, "never"],
-		"quote-props": [2, "as-needed"],
+		"quote-props": [0, "as-needed"],
 		"quotes": [2, "single", "avoid-escape"],
 		"semi-spacing": [2, {"before": false, "after": true}],
 		"semi": [2, "always"],
@@ -211,8 +211,8 @@
 		"constructor-super": 0,
 		"generator-star-spacing": [0, {"before": true, "after": false}],
 		"no-this-before-super": 0,
-		"no-var": 0,
+		"no-var": 2,
 		"object-shorthand": [0, "always"],
-		"prefer-const": 1
+		"prefer-const": 2
 	}
 }
