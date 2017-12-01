@@ -16,8 +16,8 @@
 		"url":  "http://github.com/morkai/h5.modbus.git"
 	},
 	"engines": {
-    "node": ">=4.x.x"
-  },
+		"node": ">=8.x.x"
+	},
 	"main": "./lib/index",
 	"dependencies": {
 		"h5.buffers": "0.x.x"

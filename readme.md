@@ -11,8 +11,8 @@ Implementation of the MODBUS IP/ASCII/RTU master and slave over TCP/UDP/Serial/W
 
 ## Requirements
 
-  * [Node.js](https://nodejs.org/) >= v4
-  * [voodootikigod/node-serialport](https://github.com/voodootikigod/node-serialport) >= v2
+  * [Node.js](https://nodejs.org/) >= v8
+  * [voodootikigod/node-serialport](https://github.com/voodootikigod/node-serialport) >= v6
     (only for serial port communication).
   * [websockets/ws](https://github.com/websockets/ws) >= v1
     (only for WebSocket communication).
