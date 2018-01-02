@@ -31,7 +31,7 @@ listener.on('client', function(client)
 {
   stats.reset();
 
-  var clientAddress = client.remoteInfo.address;
+  const clientAddress = client.remoteInfo.address;
 
   if (clientOverflowMap.get(clientAddress) > MAX_BUFFER_OVERFLOWS)
   {
@@ -42,7 +42,7 @@ listener.on('client', function(client)
     return;
   }
 
-  var clientId = ++clientCounter;
+  const clientId = ++clientCounter;
 
   clientIdMap.set(client, clientId);
 
@@ -108,8 +108,8 @@ const UNIT_TO_DATA = {
   0x01: {
     coils: new Array(0xFFFF),
     discreteInputs: new Array(0xFFFF),
-    holdingRegisters: new Buffer(0xFFFF * 2).fill(0),
-    inputRegisters: new Buffer(0xFFFF * 2).fill(0)
+    holdingRegisters: new Buffer(0x10000 * 2).fill(0),
+    inputRegisters: new Buffer(0x10000 * 2).fill(0)
   }
 };
 const FUNCTION_CODE_TO_DATA_PROPERTY = {
@@ -338,7 +338,16 @@ function handleWriteSingleCoilRequest(unit, request, functionData, respond)
  */
 function handleWriteSingleRegisterRequest(unit, request, functionData, respond)
 {
-  respond(ExceptionCode.IllegalFunctionCode);
+  try
+  {
+    functionData.writeUInt16BE(request.value, request.address * 2);
+
+    respond(request);
+  }
+  catch (err)
+  {
+    respond(ExceptionCode.IllegalDataAddress);
+  }
 }
 
 /**
@@ -360,7 +369,16 @@ function handleWriteMultipleCoilsRequest(unit, request, functionData, respond)
  */
 function handleWriteMultipleRegistersRequest(unit, request, functionData, respond)
 {
-  respond(ExceptionCode.IllegalFunctionCode);
+  try
+  {
+    request.values.copy(functionData, request.startingAddress * 2);
+
+    respond(request);
+  }
+  catch (err)
+  {
+    respond(ExceptionCode.IllegalDataAddress);
+  }
 }
 
 /**
