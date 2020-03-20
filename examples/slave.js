@@ -108,8 +108,8 @@ const UNIT_TO_DATA = {
   0x01: {
     coils: new Array(0xFFFF),
     discreteInputs: new Array(0xFFFF),
-    holdingRegisters: new Buffer(0x10000 * 2).fill(0),
-    inputRegisters: new Buffer(0x10000 * 2).fill(0)
+    holdingRegisters: Buffer.alloc(0x10000 * 2),
+    inputRegisters: Buffer.alloc(0x10000 * 2)
   }
 };
 const FUNCTION_CODE_TO_DATA_PROPERTY = {
