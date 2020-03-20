@@ -59,7 +59,7 @@ master.once('open', function()
 
 function startTransaction(id, functionCode, quantity, interval)
 {
-  var t = master.execute({
+  const t = master.execute({
     id: id,
     request: {
       functionCode: functionCode,
