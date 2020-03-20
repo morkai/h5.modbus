@@ -130,7 +130,8 @@ const FUNCTION_CODE_TO_DATA_HANDLER = {
   [FunctionCode.WriteSingleCoil]: handleWriteSingleCoilRequest,
   [FunctionCode.WriteSingleRegister]: handleWriteSingleRegisterRequest,
   [FunctionCode.WriteMultipleCoils]: handleWriteMultipleCoilsRequest,
-  [FunctionCode.WriteMultipleRegisters]: handleWriteMultipleRegistersRequest
+  [FunctionCode.WriteMultipleRegisters]: handleWriteMultipleRegistersRequest,
+  [FunctionCode.ReadWriteMultipleRegisters]: handleReadWriteRequest
 };
 
 setInterval(function()
@@ -377,6 +378,30 @@ function handleWriteMultipleRegistersRequest(unit, request, functionData, respon
   }
   catch (err)
   {
+    respond(ExceptionCode.IllegalDataAddress);
+  }
+}
+
+/**
+ * @param {number} unit
+ * @param {Request} request
+ * @param {UnitData} unitData
+ * @param {respondCallback} respond
+ */
+handleReadWriteRequest(unit, request, unitData, respond)
+{
+  const functionData = unitData[FUNCTION_CODE_TO_DATA_PROPERTY[request.functionCode]] || null;
+  try {
+    request.writeValues.copy(functionData, request.writeStartingAddress * 2);
+    this.handleReadBufferRequest(
+      functionData,
+      b => { return { data: b }; },
+      request.readStartingIndex,
+      request.readEndingIndex,
+      respond
+    );
+  }
+  catch (err) {
     respond(ExceptionCode.IllegalDataAddress);
   }
 }

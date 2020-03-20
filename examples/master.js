@@ -100,3 +100,28 @@ function onResponse(res)
 
   ++stats.res;
 }
+
+/**
+ * Update periodic read-write request for existing ReadWrite repeatable transaction
+ * @param {string} id transaction id
+ * @param {Buffer} values New Buffer values
+ */
+function updateTransaction(id, values){
+  const transaction = this.master.repeatableTransactions.get(id);
+  if (!transaction){
+    throw new Error(`Transaction ${id} not found!`);
+  }
+  if (transaction.request.functionCode!== 23 || !transaction.isRepeatable()){
+    throw new Error(`Request not updatable`)
+  }
+  let runningTransaction = this.master.runningTransactions.get(transaction);
+  if (runningTransaction) {
+    runningTransaction.transaction.request.updateWriteValues(values);
+    runningTransaction.resetFrame();
+  }
+  runningTransaction = this.master.runningTransactionCache.get(transaction);
+  if (runningTransaction) {
+    runningTransaction.transaction.request.updateWriteValues(values);
+    runningTransaction.resetFrame();
+  }
+}
