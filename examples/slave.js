@@ -27,7 +27,7 @@ listener.on('open', () => console.log('listener#open'));
 listener.on('close', () => console.log('listener#close'));
 listener.on('error', (err) => console.log('listener#error: %s', err.message));
 listener.once('client', () => setInterval(stats.show.bind(stats), 1000));
-listener.on('client', function(client)
+listener.on('client', (client) =>
 {
   stats.reset();
 
@@ -57,7 +57,7 @@ listener.on('client', function(client)
     client.on('write', data => console.log('client#%d#write:', clientId, data));
   }
 
-  client.on('bufferOverflow', function(buffer)
+  client.on('bufferOverflow', (buffer) =>
   {
     const count = (clientOverflowMap.get(clientAddress) || 0) + 1;
 
@@ -85,7 +85,7 @@ if (global.gc)
   setInterval(global.gc, 60000);
 }
 
-slave.on('request', function(e)
+slave.on('request', (e) =>
 {
   if (DEBUG)
   {
@@ -94,7 +94,7 @@ slave.on('request', function(e)
 
   ++stats.req;
 });
-slave.on('response', function(e)
+slave.on('response', (e) =>
 {
   if (DEBUG)
   {
@@ -120,7 +120,8 @@ const FUNCTION_CODE_TO_DATA_PROPERTY = {
   [FunctionCode.WriteSingleCoil]: 'coils',
   [FunctionCode.WriteSingleRegister]: 'holdingRegisters',
   [FunctionCode.WriteMultipleCoils]: 'coils',
-  [FunctionCode.WriteMultipleRegisters]: 'holdingRegisters'
+  [FunctionCode.WriteMultipleRegisters]: 'holdingRegisters',
+  [FunctionCode.ReadWriteMultipleRegisters]: 'holdingRegisters'
 };
 const FUNCTION_CODE_TO_DATA_HANDLER = {
   [FunctionCode.ReadCoils]: handleReadCoilsRequest,
@@ -130,18 +131,19 @@ const FUNCTION_CODE_TO_DATA_HANDLER = {
   [FunctionCode.WriteSingleCoil]: handleWriteSingleCoilRequest,
   [FunctionCode.WriteSingleRegister]: handleWriteSingleRegisterRequest,
   [FunctionCode.WriteMultipleCoils]: handleWriteMultipleCoilsRequest,
-  [FunctionCode.WriteMultipleRegisters]: handleWriteMultipleRegistersRequest
+  [FunctionCode.WriteMultipleRegisters]: handleWriteMultipleRegistersRequest,
+  [FunctionCode.ReadWriteMultipleRegisters]: handleReadWriteMultipleRegistersRequest
 };
 
-setInterval(function()
+setInterval(() =>
 {
   UNIT_TO_DATA[0x01].coils[0] = Math.round(Math.random() * 0xFF);
 }, 100);
-setInterval(function()
+setInterval(() =>
 {
   UNIT_TO_DATA[0x01].coils[1] = Math.random() > 0.5 ? 0xFF : 0x00;
 }, 50);
-setInterval(function()
+setInterval(() =>
 {
   UNIT_TO_DATA[0x01].coils[2] = ([0, 1, 2, 4, 8, 16, 32, 64, 128])[Math.round(Math.random() * 9)];
 }, 33);
@@ -157,7 +159,7 @@ function handleRequest(unit, request, respond)
 
   if (unitData)
   {
-    handleUnitRequest(unit, request, unitData, function(result)
+    handleUnitRequest(unit, request, unitData, (result) =>
     {
       if (DELAY)
       {
@@ -379,6 +381,34 @@ function handleWriteMultipleRegistersRequest(unit, request, functionData, respon
   {
     respond(ExceptionCode.IllegalDataAddress);
   }
+}
+
+/**
+ * @param {number} unit
+ * @param {ReadWriteMultipleRegistersRequest} request
+ * @param {Buffer} functionData
+ * @param {respondCallback} respond
+ */
+function handleReadWriteMultipleRegistersRequest(unit, request, functionData, respond)
+{
+  try
+  {
+    request.writeValues.copy(functionData, request.writeStartingAddress * 2);
+  }
+  catch (err)
+  {
+    respond(ExceptionCode.IllegalDataAddress);
+
+    return;
+  }
+
+  handleReadBufferRequest(
+    functionData,
+    b => { return {data: b}; },
+    request.readStartingIndex,
+    request.readEndingIndex,
+    respond
+  );
 }
 
 /**
